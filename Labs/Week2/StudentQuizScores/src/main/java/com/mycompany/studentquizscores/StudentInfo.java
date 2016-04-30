@@ -14,7 +14,8 @@ import java.util.Scanner;
  * @author apprentice
  */
 public class StudentInfo {
-    HashMap<String, ArrayList> studentInfo = new HashMap<>();
+    
+    HashMap<Integer, Student> studentInfo = new HashMap<>();
     Scanner sc = new Scanner(System.in);
     ConsoleIO console = new ConsoleIO();
     public void currentStudents() {
@@ -23,11 +24,13 @@ public class StudentInfo {
         currentGrades.add(76.0);
         currentGrades.add(45.0);
         currentGrades.add(82.0);
-        studentInfo.put("Bob Jenkins", currentGrades);
+        Student bobJenkins = new Student("Bob Jenkins",currentGrades);
+        studentInfo.put(1001, bobJenkins);
     }
     public void viewUI() {
-        String student;
+        String studentName;
         int choice;
+        int studentID;
         do {
             console.print("What would you like to do?");
             console.print("1. View Students ");
@@ -45,25 +48,25 @@ public class StudentInfo {
                     viewStudents();
                     break;
                 case 2:
-                    student = promptForStudentName();
+                    studentName = promptForStudentName();
+                    studentID = makeStudentID();
                     ArrayList<Double> newGrades = new ArrayList<>();
-                    promptForAddStudentGrades(student, newGrades, false);
-                    addStudent(student, newGrades);
+                    promptForAddStudentGrades(studentName, studentID, newGrades, false);
                     break;
                 case 3:
                     viewStudents();
-                    student = promptForStudentName();
-                    removeStudent(student);
+                    studentID = promptForStudentID();
+                    removeStudent(studentID);
                     break;
                 case 4:
                     viewStudents();
-                    student = promptForStudentName();
-                    viewStudentScores(student);
+                    studentID = promptForStudentID();
+                    viewStudentScores(studentID);
                     break;
                 case 5:
                     viewStudents();
-                    student = promptForStudentName();
-                    viewStudentAverage(student);
+                    studentID= promptForStudentID();
+                    viewStudentAverage(studentID);
                     break;
                 case 6:
                     getClassAverage();
@@ -74,8 +77,8 @@ public class StudentInfo {
                     break;
                 case 8:
                     viewStudents();
-                    student = promptForStudentName();
-                    addGradesCurrentStudent(student);
+                    studentID = promptForStudentID();
+                    addGradesCurrentStudent(studentID);
                     break;
                 case 9:
                     System.out.println("Goodbye!");
@@ -88,52 +91,21 @@ public class StudentInfo {
         } while (choice != 9);
     }
     
-    public void promptForAddStudentGrades(String student, ArrayList<Double> newGrades, boolean current) {
+    public void promptForAddStudentGrades(String studentName, Integer studentID, ArrayList<Double> newGrades, boolean current) {
         int counter = 1;
         double grade = 0;
-        if(!studentInfo.containsKey(student) || current == true) {
-            System.out.println("Enter grades (enter -1 to quit)");
+        if(!studentInfo.containsKey(studentID) || current == true) {
+            System.out.println("Enter grades (enter blank to quit)");
             while (grade >= 0) {
-                grade = console.getDouble("Enter grade " + counter + ":");
+                grade = console.getDoubleAcceptBlank("Enter grade " + counter + ":");
                 if (grade >= 0) {
                     newGrades.add(grade);
                     counter++;
                 }
             }  
         }
-        else {
-            console.print("Student already exists!");
-            console.print("=======================");
-            String choice = console.getString("Would you like to add student with the same name? (yes or no)");
-            if ("yes".equals(choice)) {
-                boolean valid = false;
-                counter = 1;
-                while (!valid) {
-                    String studentNum = student + " " + counter;
-                    if (!studentInfo.containsKey(studentNum)) {
-                        student = studentNum;
-                        System.out.println("Enter grades (enter -1 to quit)");
-                        counter = 1;
-                        while (grade >= 0) {
-                            grade = console.getDouble("Enter grade " + counter + ":");
-                            if (grade >= 0) {
-                                newGrades.add(grade);
-                                counter++;
-                            }
-                        }
-                        valid = true;
-                    }
-                    counter++;
-                }
-            }
-            else if ("no".equals(choice)) {
-                newGrades = studentInfo.get(student);
-            }
-            else {
-                console.print("Invalid choice!");
-            }           
-        }
-        addStudent(student, newGrades);
+        Student student = new Student(studentName, newGrades);
+        addStudent(studentID, student);
     }
     public String promptForStudentName() {
         String firstName, lastName, studentName;
@@ -142,26 +114,47 @@ public class StudentInfo {
         studentName = firstName + " " + lastName;
         return studentName;
     }
-    public void addStudent(String student, ArrayList grades) {
-        studentInfo.put(student, grades);
+    
+    public int promptForStudentID() {
+        int studentID;
+        studentID = console.getInt("Please enter valid studentID: ");
+        return studentID;
+    }
+    public int makeStudentID() {
+        int counter = 1000;
+        boolean valid = false;
+        int studentID = 1000;
+        while (!valid) {
+            if (!studentInfo.containsKey(counter)) {
+                studentID = counter;
+                valid = true;
+                
+            }
+            counter ++;
+        }
+        return studentID;
+    }
+    public void addStudent(int studentID, Student student) {
+        studentInfo.put(studentID, student);
     }
     
-    public void removeStudent(String student) {
-        studentInfo.remove(student);
+    public void removeStudent(int studentID) {
+        studentInfo.remove(studentID);
     }
     
     public void viewStudents() {
-        Collection<String> studentNames = studentInfo.keySet();
+        Collection<Integer> studentIDs = studentInfo.keySet();
         System.out.println("List of Students:");
         System.out.println("=================");
-        for (String studentName : studentNames) {
-            System.out.println(studentName);
+        for (Integer studentID : studentIDs) {
+            System.out.println(studentID + " " + studentInfo.get(studentID).getName());
         }
     }
     
-    public void viewStudentScores(String student) {
+    public void viewStudentScores(int studentID) {
         try {
-            ArrayList<Double> quizGrades = studentInfo.get(student);
+            ArrayList<Double> quizGrades = studentInfo.get(studentID).getQuizScores();
+            String student = studentInfo.get(studentID).getName();
             System.out.println("Scores for " + student + ": ");
             console.print("=========================");
             for (double quizGrade : quizGrades) {
@@ -173,15 +166,15 @@ public class StudentInfo {
         }
         
     }
-    public void addGradesCurrentStudent(String student) {
-        viewStudentScores(student);
+    public void addGradesCurrentStudent(int studentID) {
+        viewStudentScores(studentID);
         boolean valid = false;
         ArrayList<Double> newGrades = new ArrayList<>();
         while (!valid) {
             int choice = console.getInt("1. Add grades to list 2. Overwrite current list");
             switch (choice) {
                 case 1:
-                    newGrades = studentInfo.get(student);
+                    newGrades = (studentInfo.get(studentID)).getQuizScores();
                     valid = true;
                     break;
                 case 2:
@@ -192,13 +185,15 @@ public class StudentInfo {
                     break;
             }
         }
-        promptForAddStudentGrades(student, newGrades, true);
+        String studentName = studentInfo.get(studentID).getName();
+        promptForAddStudentGrades(studentName, studentID, newGrades, true);
         
     }
     
-    public void viewStudentAverage(String student) {
+    public void viewStudentAverage(int studentID) {
         try {
-            ArrayList<Double> quizGrades = studentInfo.get(student);
+            ArrayList<Double> quizGrades = (studentInfo.get(studentID)).getQuizScores();
+            String student = studentInfo.get(studentID).getName();
             System.out.println(student + "'s Average: ");
             double average = getGradeAverage(quizGrades);
             System.out.println(average);
@@ -222,9 +217,9 @@ public class StudentInfo {
         double classAverage =0;
         double classSum =0;
         double studentAverage;
-        Collection<ArrayList> studentGrades = studentInfo.values();
-        for (ArrayList studentGrade : studentGrades) {
-            studentAverage = getGradeAverage(studentGrade);
+        Collection<Student> studentGrades = studentInfo.values();
+        for (Student studentGrade : studentGrades) {
+            studentAverage = getGradeAverage(studentGrade.getQuizScores());
             classSum+= studentAverage;
         }
         classAverage = classSum/studentInfo.size();
@@ -235,10 +230,12 @@ public class StudentInfo {
     public void getHighestAverage() {
         double studentAverage;
         double high = 0;
-        Collection<String> students = studentInfo.keySet();
+        String student;
+        Collection<Integer> studentIDs = studentInfo.keySet();
         String highestStudent = "";
-        for (String student : students) {
-            studentAverage = getGradeAverage(studentInfo.get(student));
+        for (Integer studentID : studentIDs) {
+            student = (studentInfo.get(studentID)).getName();
+            studentAverage = getGradeAverage(studentInfo.get(studentID).getQuizScores());
             if (studentAverage > high) {
                 high = studentAverage;
                 highestStudent = student;
@@ -250,17 +247,20 @@ public class StudentInfo {
         console.print("The student with the highest average is " + highestStudent + " with " + high + ".");
     }
     public void getLowestAverage() {
+        String student;
         double studentAverage;
         double low = 100000;
-        Collection<String> students = studentInfo.keySet();
+        Collection<Integer> studentIDs = studentInfo.keySet();
         String lowestStudent = "";
-        for (String student : students) {
-            studentAverage = getGradeAverage(studentInfo.get(student));
+        for (Integer studentID : studentIDs) {
+            studentAverage = getGradeAverage(studentInfo.get(studentID).getQuizScores());
             if (studentAverage < low) {
                 low = studentAverage;
+                student = (studentInfo.get(studentID)).getName();
                 lowestStudent = student;
             }
             else if (studentAverage == low) {
+                student = (studentInfo.get(studentID)).getName();
                 lowestStudent = lowestStudent + "/" + student;
             }
         }

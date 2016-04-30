@@ -65,7 +65,29 @@ public class ConsoleIO {
         while (!valid) {
             try {
                 System.out.println(prompt);
-                value = sc.nextDouble();
+                value = Double.parseDouble(sc.nextLine());
+                valid = true;
+            } catch(Exception e) {
+                System.out.println("Invalid entry!");
+                sc.nextLine();
+            }
+        }
+        return value;
+    }
+    public double getDoubleAcceptBlank(String prompt) {
+        String input;
+        double value = 0;
+        boolean valid = false;
+        while (!valid) {
+            try {
+                System.out.println(prompt);
+                input = sc.nextLine();
+                if ("".equals(input)) {
+                    value = -1;
+                }
+                else {
+                    value = Double.parseDouble(input);
+                }
                 valid = true;
             } catch(Exception e) {
                 System.out.println("Invalid entry!");
