@@ -12,7 +12,6 @@ package com.mycompany.studentquizscores;
 public class StudentQuizGrades {
     public static void main(String[] args) {
         StudentInfo sis = new StudentInfo();
-        sis.currentStudents();
         sis.viewUI();
     }
 }
