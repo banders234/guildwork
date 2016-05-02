@@ -31,10 +31,10 @@ public class StudentInfo {
             console.print("2. Add Student ");
             console.print("3. Remove Student ");
             console.print("4. View Scores for a Student ");
-            console.print("5. View Average for a Student ");
-            console.print("6. View Class Average ");
-            console.print("7. View Highest/Lowest Average ");
-            console.print("8. Add Grades to Current Student");
+            console.print("5. Add Grades to Current Student ");
+            console.print("6. View Average for a Student ");
+            console.print("7. View Class Average ");
+            console.print("8. View Highest/Lowest Average ");
             console.print("9. Exit ");
             choice = console.getIntWithDef("Enter number for choice", 10);
             switch(choice) {
@@ -59,20 +59,20 @@ public class StudentInfo {
                     break;
                 case 5:
                     viewStudents();
+                    studentID = promptForStudentID();
+                    addGradesCurrentStudent(studentID);
+                    break;
+                case 6:
+                    viewStudents();
                     studentID= promptForStudentID();
                     sa.viewStudentAverage(studentID, studentInfo);
                     break;
-                case 6:
+                case 7:
                     sa.getClassAverage(studentInfo);
                     break;
-                case 7:
+                case 8:
                     sa.getHighestAverage(studentInfo);
                     sa.getLowestAverage(studentInfo);
-                    break;
-                case 8:
-                    viewStudents();
-                    studentID = promptForStudentID();
-                    addGradesCurrentStudent(studentID);
                     break;
                 case 9:
                     System.out.println("Goodbye!");
