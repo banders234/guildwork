@@ -1,3 +1,2 @@
-2::David::Ortiz::2
-1::Dustin::Pedroia::2
-3::Jose::Altuve::2
+4::Joe::Mauer::8
+1::Ryan::Braun::9

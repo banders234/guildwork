@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import com.mycompany.studentquizscores.StudentAverages;
+import com.mycompany.controllers.StudentInfoController;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -46,14 +46,14 @@ public class StudentInfoTests {
     // public void hello() {}
     @Test
     public void StudentAverageTest() {
-        StudentAverages sa = new StudentAverages();
+        StudentInfoController si = new StudentInfoController();
         
         ArrayList<Double> average = new ArrayList<>();
         average.add(99.0);
         average.add(90.0);
         average.add(80.0);
         average.add(75.0);
-        Double result = sa.getGradeAverage(average);
+        Double result = si.getGradeAverage(average);
         Assert.assertEquals(86.0, result, 0.001);
         
     }

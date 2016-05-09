@@ -1,4 +1,9 @@
 1::New York::Yankees
 2::Boston::Red Sox
 3::Houston::Astros
-4::Washington::Nationals
+5::Washington::Nationals
+6::Pittsburgh::Pirates
+4::Toronto::Blue Jays
+7::Seattle::Mariners
+8::Minnesota::Twins
+9::Milwaukee::Brewers
