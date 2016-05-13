@@ -518,7 +518,7 @@ public class OrderController {
                 boolean exit = returnToMenuOption();
                 if (exit) {
                     return;
-                }
+                } 
             }
         } while (state.length() != 2 && taxBook.containsState(state));
         double taxRate=console.getDouble("Enter the state tax rate: ");
