@@ -520,7 +520,7 @@ public class OrderController {
                     return;
                 }
             }
-        } while (state.length() != 2 && !taxBook.containsState(state));
+        } while (state.length() != 2 && taxBook.containsState(state));
         double taxRate=console.getDouble("Enter the state tax rate: ");
         tax.setState(state);
         tax.setTaxRate(taxRate);
@@ -536,7 +536,7 @@ public class OrderController {
                 console.print("Product already exists!");
                 
             }
-        } while (!productBook.containsType(type));
+        } while (productBook.containsType(type));
         double materialCost = console.getDouble("Enter the material cost per sq foot: ");
         double laborCost = console.getDouble("Enter the labor cost per sq foot: ");
         product.setType(type);

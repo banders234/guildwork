@@ -182,12 +182,18 @@ public class OrderDao {
                 myOrder.setDate(date);
                 myOrder.setOrderNumber(id);
                 // Find first comma if quotes exist, take string between quotes
+                String concate="";
                 if (stringParts.length > 12) {
-                    if (stringParts[1].charAt(0)== ('\"') && stringParts[2].indexOf('\"') >= 0) {
-                        String concate = stringParts[1] + stringParts[2];
-                        customerName = currentLine.substring(currentLine.indexOf(',') + 2, concate.length() + 2);
+                    int iCounter = 1;
+                    int overSize = stringParts.length-12;
+                    concate=stringParts[1];
+                    while (iCounter<=overSize) {
+                        concate = concate + stringParts[iCounter+1];
+                        iCounter++;
                         counter++;
                     }
+                    customerName = currentLine.substring(currentLine.indexOf(',') + 2, concate.length() + overSize+1);
+
                 }
                 else {
                     customerName = stringParts[1];

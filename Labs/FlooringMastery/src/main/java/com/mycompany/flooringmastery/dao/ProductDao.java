@@ -32,12 +32,7 @@ import org.w3c.dom.*;
  * @author apprentice
  */
 public class ProductDao {
-    private final List<Product> products = decode();
-    
-    public ProductDao() {
-//        saveToXML("myFile.xml");
-//        readXML("myFile.xml");
-    }
+    private final List<Product> products = readXML("Data/products.xml");
     
     private boolean test=true;
     public void setTest(boolean test) {
@@ -63,13 +58,15 @@ public class ProductDao {
         
         products.add(product);
         if (!test) {
-            encode();
+        //    encode();
+        saveToXML("Data/products.xml");
         }
     }
     public void delete(Product product) {
         products.remove(product);
         if (!test) {
-            encode();
+        //    encode();
+            saveToXML("Data/products.xml");
         }
     }
     public Product find(String productType) {
@@ -86,7 +83,8 @@ public class ProductDao {
         products.remove(oldProduct);
         products.add(newProduct);
         if (!test) {
-            encode();
+        //   encode();
+            saveToXML("Data/products.xml");
         }
     }
     
@@ -101,216 +99,142 @@ public class ProductDao {
         }
         return contains;
     }
-    
-        private void encode() {
-        final String TOKEN = ",";
+    // Encode and decode functions not in use!
+//        private void encode() {
+//        final String TOKEN = ",";
+//
+//        try {
+//                PrintWriter out = new PrintWriter(new FileWriter("Data/products.txt"));
+//                for (Product myProduct : products) { 
+//                    out.print(myProduct.getType());
+//                    out.print(TOKEN);
+//                    
+//                    out.print(myProduct.getMaterialCostPerSF());
+//                    out.print(TOKEN);
+//                    
+//                    out.print(myProduct.getLaborCostPerSF());
+//                    out.println();
+//
+//                      
+//                }
+//                out.flush();
+//                out.close();
+//            } catch(IOException ex) {
+//                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//
+//    }
+//        
+//    private List<Product> decode() {
+//        List<Product> productList = new ArrayList<>();
+//        try {
+//            Scanner sc = new Scanner(new BufferedReader(new FileReader("Data/products.txt")));
+//            while(sc.hasNextLine()) {
+//                String currentLine = sc.nextLine();
+//                String[] stringParts= currentLine.split(",");
+//                Product myProduct = new Product();
+//                myProduct.setType(stringParts[0]);
+//                double materialCostPerSF = Double.parseDouble(stringParts[1]);
+//                double laborCostPerSF = Double.parseDouble(stringParts[2]);
+//                myProduct.setMaterialCostPerSF(materialCostPerSF);
+//                myProduct.setLaborCostPerSF(laborCostPerSF);
+//                productList.add(myProduct);
+//            }
+//        } catch(FileNotFoundException | NumberFormatException ex) {
+//            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        return productList;
+//    }
 
-        try {
-                PrintWriter out = new PrintWriter(new FileWriter("Data/products.txt"));
-                for (Product myProduct : products) { 
-                    out.print(myProduct.getType());
-                    out.print(TOKEN);
-                    
-                    out.print(myProduct.getMaterialCostPerSF());
-                    out.print(TOKEN);
-                    
-                    out.print(myProduct.getLaborCostPerSF());
-                    out.println();
-
-                      
-                }
-                out.flush();
-                out.close();
-            } catch(IOException ex) {
-                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-
-    }
-        
-    private List<Product> decode() {
+    private List<Product> readXML(String xml) {
         List<Product> productList = new ArrayList<>();
         try {
-            Scanner sc = new Scanner(new BufferedReader(new FileReader("Data/products.txt")));
-            while(sc.hasNextLine()) {
-                String currentLine = sc.nextLine();
-                String[] stringParts= currentLine.split(",");
-                Product myProduct = new Product();
-                myProduct.setType(stringParts[0]);
-                double materialCostPerSF = Double.parseDouble(stringParts[1]);
-                double laborCostPerSF = Double.parseDouble(stringParts[2]);
-                myProduct.setMaterialCostPerSF(materialCostPerSF);
-                myProduct.setLaborCostPerSF(laborCostPerSF);
-                productList.add(myProduct);
+            File fXmlFile = new File(xml);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+            doc.getDocumentElement().normalize();
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            if (doc.hasChildNodes()) {
+                System.out.println(doc.getChildNodes().getLength());
+		NodeList nproducts = doc.getChildNodes().item(0).getChildNodes();
+                System.out.println(nproducts.getLength());
+                int counter = 1;
+                while (counter < nproducts.getLength()) {
+                    Product product = new Product();
+                    NodeList nlProduct = nproducts.item(counter).getChildNodes();
+                    product.setType(nlProduct.item(1).getTextContent());
+                    double mCost = Double.parseDouble(nlProduct.item(3).getTextContent().substring(1));
+                    product.setMaterialCostPerSF(mCost);
+                    double lCost = Double.parseDouble(nlProduct.item(5).getTextContent().substring(1));
+                    product.setLaborCostPerSF(lCost);
+                    productList.add(product);
+                    counter+=2;
+                }
+
             }
-        } catch(FileNotFoundException | NumberFormatException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            return productList;
+
+        } catch(ParserConfigurationException pce) {
+            System.out.println(pce.getMessage());
+        } catch (SAXException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return productList;
     }
-//    String role1 = "Hi";
-//    String role2 = "Hey";
-//    String role3 = "Hello";
-//    String role4 = "Ha";
-//    List<String> rolev = new ArrayList<>();
-//    private boolean readXML(String xml) {
-//        
-//        try {
-//            Node node;
-//            File fXmlFile = new File(xml);
-//            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-//            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-//            Document doc = dBuilder.parse(fXmlFile);
-//            doc.getDocumentElement().normalize();
-//            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-//            if (doc.hasChildNodes()) {
-//                System.out.println(doc.getChildNodes().getLength());
-//		NodeList nproducts = doc.getChildNodes().item(0).getChildNodes();
-//                System.out.println(nproducts.getLength());
-//                int counter = 1;
-//                Node types = nproducts.item(1);
-//                Node materialCosts = nproducts.item(3);
-//                Node laborCosts = nproducts.item(5);
-//                while (counter < nproducts.getLength()) {
-//                    node = nproducts.item(counter);
-//                    if (node.getNodeType() == Node.ELEMENT_NODE) {
-//                        System.out.println(nproducts.item(counter).getNodeName());
-//                        System.out.println(counter);
-//                    }
-//                    counter++;
-//                }
-//            }
-//            NodeList nList = doc.getElementsByTagName("types");
-//            System.out.println("----------------------------");
-//            Node n = nList.item(0);
-//            nList = n.getChildNodes();
-//            for (int temp = 0; temp < nList.getLength(); temp++) {
-//
-//		Node nNode = nList.item(temp);
-//				
-//		System.out.println("\nCurrent Element :" + nNode.getNodeName());
-//		
-//		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-//                        Element eElement = (Element) nNode;
-//                        NodeList nl = eElement.getElementsByTagName("type1");
-//                        if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
-//                           System.out.println(nNode.getNodeValue());
-//                        }
-//			
-//
-//		}
-//            }
-//
-//            return true;
-//        } catch(ParserConfigurationException pce) {
-//            System.out.println(pce.getMessage());
-//        } catch (SAXException ex) {
-//            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return false;
-//    }
-//    
-//    private void saveToXML(String xml) {
-//        Document dom;
-//        Element e = null;
-//        Element f = null;
-//        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-//        try {
-//            DocumentBuilder db = dbf.newDocumentBuilder();
-//            
-//            dom = db.newDocument();
-//            int counter = 1;
-//            Element rootEle = dom.createElement("products");
-//            e = dom.createElement("types");
-//            for (Product myProduct : products) {
-//                f = dom.createElement("type" + counter);
-//                f.appendChild(dom.createTextNode(myProduct.getType()));
-//                e.appendChild(f);
-//                counter++;
-//            }
-//            rootEle.appendChild(e);
-//            counter=1;
-//            e = dom.createElement("materialcosts");
-//            for (Product myProduct : products) {
-//                f = dom.createElement("materialcost" + counter);
-//                String materialCost = "d" + myProduct.getMaterialCostPerSF();
-//                f.appendChild(dom.createTextNode(materialCost));
-//                e.appendChild(f);
-//                counter++;
-//            }
-//            rootEle.appendChild(e);
-//            counter=1;
-//            e = dom.createElement("laborcosts");
-//            for (Product myProduct : products) {
-//                f = dom.createElement("laborcost" + counter);
-//                String laborCost = "d" + myProduct.getLaborCostPerSF();
-//                f.appendChild(dom.createTextNode(laborCost));
-//                e.appendChild(f);
-//                counter++;
-//            }
-//            rootEle.appendChild(e);
-//            dom.appendChild(rootEle);
-//        try {
-//            Transformer tr = TransformerFactory.newInstance().newTransformer();
-//            tr.setOutputProperty(OutputKeys.INDENT, "yes");
-//            tr.setOutputProperty(OutputKeys.METHOD, "xml");
-//            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-//            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-//            tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(xml)));
-//
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//            
-//        } catch(ParserConfigurationException pce) {
-//            System.out.println("UsersXML: Error trying instantiate DocuemntBuilder");
-//        }
-//        
-//    }
-//    private void printNote(NodeList nodeList) {
-//
-//    for (int count = 0; count < nodeList.getLength(); count++) {
-//
-//	Node tempNode = nodeList.item(count);
-//
-//	// make sure it's element node.
-//	if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
-//
-//		// get node name and value
-//		System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
-//		System.out.println("Node Value =" + tempNode.getTextContent());
-//
-//		if (tempNode.hasAttributes()) {
-//
-//			// get attributes names and values
-//			NamedNodeMap nodeMap = tempNode.getAttributes();
-//
-//			for (int i = 0; i < nodeMap.getLength(); i++) {
-//
-//				Node node = nodeMap.item(i);
-//				System.out.println("attr name : " + node.getNodeName());
-//				System.out.println("attr value : " + node.getNodeValue());
-//
-//			}
-//
-//		}
-//
-//		if (tempNode.hasChildNodes()) {
-//
-//			// loop again if has child nodes
-//			printNote(tempNode.getChildNodes());
-//
-//		}
-//
-//		System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
-//
-//	}
-//
-//    }
+    
+    private void saveToXML(String xml) {
+        Document dom;
+        Element e = null;
+        Element f = null;
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            
+            dom = db.newDocument();
+            int counter = 1;
+            Element rootEle = dom.createElement("products");
+            for (Product myProduct : products) {
+                e = dom.createElement("product" + counter);
+                f = dom.createElement("type");
+                f.appendChild(dom.createTextNode(myProduct.getType()));
+                e.appendChild(f);
+                f = dom.createElement("materialcost");
+                String materialCost = "d" + myProduct.getMaterialCostPerSF();
+                f.appendChild(dom.createTextNode(materialCost));
+                e.appendChild(f);
+                f = dom.createElement("laborcost");
+                String laborCost = "d" + myProduct.getLaborCostPerSF();
+                f.appendChild(dom.createTextNode(laborCost));
+                e.appendChild(f);
+                rootEle.appendChild(e);
+                counter++;
+            }
+            dom.appendChild(rootEle);
+        try {
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(xml)));
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
+            
+        } catch(ParserConfigurationException pce) {
+            System.out.println("UsersXML: Error trying instantiate DocuemntBuilder");
+        }
+        
+    }
+ 
+       
+}
 
 
 

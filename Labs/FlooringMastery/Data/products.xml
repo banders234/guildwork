@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<products>
+    <product1>
+        <type>Carpet</type>
+        <materialcost>d2.25</materialcost>
+        <laborcost>d2.1</laborcost>
+    </product1>
+    <product2>
+        <type>Laminate</type>
+        <materialcost>d1.75</materialcost>
+        <laborcost>d2.1</laborcost>
+    </product2>
+    <product3>
+        <type>Tile</type>
+        <materialcost>d3.5</materialcost>
+        <laborcost>d4.15</laborcost>
+    </product3>
+    <product4>
+        <type>Wood</type>
+        <materialcost>d5.15</materialcost>
+        <laborcost>d4.75</laborcost>
+    </product4>
+</products>
