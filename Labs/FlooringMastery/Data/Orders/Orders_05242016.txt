@@ -1,1 +1,2 @@
-3,"Acme, Inc",PA,6.75,wood,425.0,5.15,4.75,2188.75,2018.75,284.00625,4491.50625
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+2,Brandon Anderson,PA,6.75,tile,50.0,3.5,4.15,175.0,207.50000000000003,25.81875,408.31875

@@ -1,1 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
 5,"Doogie Howser, "MD"",OH,6.25,wood,425.0,5.15,4.75,2188.75,2018.75,262.96875,4470.46875

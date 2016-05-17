@@ -5,7 +5,7 @@
  */
 package com.mycompany.flooringmastery.app;
 
-import com.mycompany.flooringmastery.controller.OrderController;
+import com.mycompany.flooringmastery.controller.FlooringController;
 
 /**
  *
@@ -13,7 +13,7 @@ import com.mycompany.flooringmastery.controller.OrderController;
  */
 public class App {
     public static void main (String[] args) {
-        OrderController controller = new OrderController();
+        FlooringController controller = new FlooringController();
         controller.run();
     }
 }

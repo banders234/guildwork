@@ -169,6 +169,7 @@ public class OrderDao {
         try {
             Scanner sc = new Scanner(new BufferedReader(new FileReader("Data/Orders/"+fileName)));
             Date date = sdf.parse(dateString);
+            sc.nextLine();
             while (sc.hasNextLine()) {
  
                 int counter = 0;
@@ -192,7 +193,7 @@ public class OrderDao {
                         iCounter++;
                         counter++;
                     }
-                    customerName = currentLine.substring(currentLine.indexOf(',') + 2, concate.length() + overSize+1);
+                    customerName = currentLine.substring(currentLine.indexOf(',') + 1, concate.length() + overSize+2);
 
                 }
                 else {
@@ -277,6 +278,9 @@ public class OrderDao {
                 if (dateOrderList.isEmpty()) {
                     File f = new File(fileName);
                     f.delete();
+                }
+                else {
+                    out.println("OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total");
                 }
                 for (Order myOrder : dateOrderList) {
                     out.print(myOrder.getOrderNumber());

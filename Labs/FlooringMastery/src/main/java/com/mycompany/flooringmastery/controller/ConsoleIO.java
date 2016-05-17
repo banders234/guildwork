@@ -48,7 +48,7 @@ public class ConsoleIO {
             
             }
             catch (ParseException ex) {
-                System.out.println("Invaid entry!");
+                System.out.println("Invalid entry!");
             }
             if (date == null) {
                 System.out.println("Must enter date in the valid format! \"mm/dd/yyyy\"");
@@ -67,14 +67,19 @@ public class ConsoleIO {
                     return currentValue;
                 }
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                sdf.setLenient(true);
+                Date future=sdf.parse("01/01/3000");
                 date = sdf.parse(value);
                 if (!value.equals(sdf.format(date))) {
                     date = null;
                 }
-            
+                else if (date.after(future)) {
+                    System.out.println("That date is too far in the future!");
+                    date = null;
+                }
             }
             catch (ParseException ex) {
-                System.out.println("Invaid entry!");
+                System.out.println("Invalid entry!");
             }
             if (date == null) {
                 System.out.println("Must enter date in the valid format! \"mm/dd/yyyy\"");
@@ -203,6 +208,7 @@ public class ConsoleIO {
         double value = 0;
         boolean valid = false;
         while (!valid) {
+            
             try {
                 System.out.println(prompt);
                 input = sc.nextLine();
@@ -222,12 +228,53 @@ public class ConsoleIO {
     }
     public double getDoubleMinMax(String prompt, double min, double max) {
         double value = 0;
+        String str;
         System.out.println(prompt);
         do {
-            value = sc.nextDouble();
-        } while (value < max && value > min);
+            try {
+                str = sc.nextLine();
+                value = Double.parseDouble(str);
+                if (value >= max) {
+                    System.out.print("Value is too large!");
+                }
+                else if (value <= min) {
+                    System.out.println("Value is too small!");
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Please enter a valid number!");
+                }
+        } while (value >= max || value <= min);
+        
         return value;
     }
+        
+    
+    public double getDoubleMinMaxAcceptBlank(String prompt, double min, double max) {
+        double value = 0;
+        boolean valid = false;
+        String str;
+        System.out.println(prompt);
+        do {
+            try {
+                str = sc.nextLine();
+                value = Double.parseDouble(str);
+                if (value >= max) {
+                    System.out.print("Value is too large!");
+                }
+                else if (value <= min) {
+                    System.out.println("Value is too small!");
+                }
+                else {
+                    valid = true;
+                }
+            } catch(Exception e) {
+                System.out.println("Please enter valid number!");
+            }
+        } while ((value > max || value < min) && !valid);
+        return value;
+    }
+    
     public void print(String prompt) {
         String message = prompt;
         System.out.println(message);
