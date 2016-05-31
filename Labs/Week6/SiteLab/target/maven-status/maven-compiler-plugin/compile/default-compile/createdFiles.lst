@@ -1,0 +1,11 @@
+com/mycompany/unitconverter/VolumeServlet.class
+com/mycompany/tipcalculatorweb/TipCalculatorServlet.class
+com/mycompany/unitconverter/UnitConverterServlet.class
+com/mycompany/unitconverter/MassServlet.class
+com/mycompany/unitconverter/CurrencyServlet.class
+com/mycompany/sitelab/HomeServlet.class
+com/mycompany/factorizer/FactorizerServlet.class
+com/mycompany/unitconverter/TemperatureServlet.class
+com/mycompany/flooringcalculatorweb/FlooringCalculatorServlet.class
+com/mycompany/luckysevens/LuckySevensServlet.class
+com/mycompany/interestcalculatorweb/InterestCalculatorServlet.class
