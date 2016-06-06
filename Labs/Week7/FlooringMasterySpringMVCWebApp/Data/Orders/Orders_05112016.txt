@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+1,"me, I",PA,6.75,tile,10.0,3.5,4.15,35.0,41.5,5.16375,81.66375

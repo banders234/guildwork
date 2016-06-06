@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+8,Tom Haverford,OH,6.25,wood,45.0,5.15,4.75,231.75000000000003,213.75,27.84375,473.34375
