@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+9,"Acme, Inc",MI,5.75,glass,20.0,56.0,67.0,1120.0,1340.0,141.45000000000002,2601.45
