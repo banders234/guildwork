@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+2,Brandon Anderson,PA,6.75,tile,50.0,3.5,4.15,175.0,207.50000000000003,25.81875,408.31875

@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+4,"Paul",PA,6.75,wood,425.0,5.15,4.75,2188.75,2018.75,284.00625,4491.50625

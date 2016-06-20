@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,MaterialCostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+6,"Brandon, An,derso",PA,6.75,tile,78.0,3.5,4.15,273.0,323.70000000000005,40.27725,636.97725

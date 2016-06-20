@@ -1,0 +1,151 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 16, 2016, 10:01:06 AM
+    Author     : apprentice
+*/
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 15px;
+}
+#dvd-table-container {
+    min-height: 35em;
+    max-height: 50em;
+    overflow-y: scroll;
+}
+.container {
+    width: 90%;
+}
+#link-table-container {
+    height: 25em;
+}
+#imdb-info-container {
+    height: 20em;
+}
+.modal-table {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
+    
+}
+.modal-table thead {
+    flex: 0 0 auto;
+    width: calc(100% - 0.9em);
+}
+.modal-table tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: scroll;
+}
+.modal-table tbody tr {
+    width: 100%;
+}
+.modal-table thead, .modal-table tbody tr {
+    display: table;
+    table-layout: fixed;
+}
+.imdb-link-container {
+    display: inline-block;
+    padding-left: 50px;
+    text-align: center;
+    line-height:70px;
+    width:40px;
+    height:70px;
+}
+.poster-link-container {
+    display: inline-block;
+    max-width: 50px;
+    width: 50px;
+}
+#dvd-poster {
+    text-align: center;
+    padding-bottom: 20px;
+}
+.imdb-table-left {
+    width: 100px;
+    background-color: #98FB98;
+}
+.imdb-info-link {
+    color: #008000;
+}
+.site-title {
+    display: inline-block;
+}
+.site-search {
+    display: inline-block;
+    text-align: right;
+}
+.navbar-item {
+    color: white;
+}
+th {
+    text-align: center;
+}
+#add-dvd-form {
+    margin: auto;
+}
+body {
+    background-color: black;
+}
+.container {
+    background-color: #F0F8FF;
+}
+.dvd-container {
+    margin-top: 10px;
+    height: 30em;
+    padding-bottom: 50px;
+    margin-bottom: 75px;
+}
+.poster-container {
+    height: 30em;
+}
+.img-responsive {
+    width: auto;
+    height: 30em;
+}
+.panel-heading {
+    
+    text-align: center;
+}
+.panel-body {
+    
+    text-align: center;
+}
+#data-tables-body {
+    background-color: black;
+}
+#data-tables-container {
+    width: 90%;
+    
+}
+.poster-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 120%;
+    border-bottom: thick solid #1E90FF;
+    margin-bottom: 2px;
+}
+.search-title-container {
+    font-size: 150%;
+}
+.poster-search {
+    width: auto;
+    max-height: 250px;
+}
+.poster-search-container {
+    padding-bottom: 20px;
+    
+}
+.poster-container img{
+    margin: auto;
+    display: block;
+}

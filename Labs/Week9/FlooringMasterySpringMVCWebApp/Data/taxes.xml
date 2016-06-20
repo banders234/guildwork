@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<taxes>
+    <tax1>
+        <state>OH</state>
+        <taxRate>d6.25</taxRate>
+    </tax1>
+    <tax2>
+        <state>PA</state>
+        <taxRate>d6.75</taxRate>
+    </tax2>
+    <tax3>
+        <state>MI</state>
+        <taxRate>d5.75</taxRate>
+    </tax3>
+    <tax4>
+        <state>IN</state>
+        <taxRate>d6.0</taxRate>
+    </tax4>
+</taxes>
